@@ -1,0 +1,13 @@
+.env*
+!.env.example
+node_modules/
+agent/.venv/
+dist/
+.vinext/
+.next/
+.wrangler/
+coverage/
+*.pem
+*.key
+docs/lastline-hold.png
+public/demo-maya-wild-line.wav
