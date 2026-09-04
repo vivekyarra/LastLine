@@ -40,9 +40,9 @@
   Spec ref: `spec.md > Components And Responsibilities > Reconciliation Agent API`
   What to build: FastAPI/Pydantic service, health endpoint, policy module, structured reconcile endpoint, Dockerfile, and local deterministic fallback for tests.
   Acceptance: API contracts validate and malformed inputs fail safely.
-  Verify: `pytest`; container health and reconcile smoke tests.
+  Verify: `pytest`; local Uvicorn health and reconcile smoke tests. Container build is part of the Cloud Run deployment gate.
 
-- [ ] **5. Integrate Gemini/Vertex AI reasoning**
+- [x] **5. Integrate Gemini/Vertex AI reasoning**
   Spec ref: `spec.md > AI Usage`
   What to build: Narrow ADK/Gemini orchestration, structured response schema, retries/timeouts, provenance, and safe error handling.
   Acceptance: A real model call maps a supplied line to candidate audio/metadata and returns traceable evidence; model cannot set release status.
@@ -60,13 +60,13 @@
   Acceptance: Hosted URL works without login; Cloud Run health identifies revision; no secrets are exposed.
   Verify: Incognito/no-cookie readback, API health, live analysis, and release-loop browser checks.
 
-- [ ] **8. Produce IBM Bob track evidence**
+- [x] **8. Produce IBM Bob track evidence**
   Spec ref: `spec.md > Stack`
   What to build: Bob context, focused Bob task, resulting code/docs improvement, and honest dated prompt/output/diff evidence.
-  Acceptance: Repo and submission can identify a concrete artifact Bob materially improved; no unverified claim.
+  Acceptance: Repo and submission identify the phantom-recording regression test Bob added, its 6/6 focused verification, and the dated evidence log; no runtime IBM claim.
   Verify: Run the artifact's relevant tests and preserve the checked-in evidence log.
 
-- [ ] **9. Add submission-grade quality gates**
+- [x] **9. Add submission-grade quality gates**
   Spec ref: `spec.md > Risks And Verification`
   What to build: Web/API tests, CI workflow, license, security notes, sample data provenance, and public demo reset reliability.
   Acceptance: Build, lint, tests, and smoke checks pass from a clean install; no forbidden secrets or private assets are tracked.

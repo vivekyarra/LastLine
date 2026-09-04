@@ -64,3 +64,23 @@ def test_reconcile_fails_visibly_without_vertex(monkeypatch) -> None:
     )
     assert response.status_code == 503
     assert response.json()["detail"] == "Vertex AI is not configured"
+
+
+def test_reconcile_rejects_invalid_gate_token(monkeypatch) -> None:
+    monkeypatch.setenv("LASTLINE_GATE_TOKEN", "server-only-token")
+    payload = {
+        "actor": {"id": "maya", "name": "Maya Chen"},
+        "required_lines": [{"id": "S12-L7", "scene": "12", "text": "Because he followed you."}],
+        "recordings": [{"id": "T4", "filename": "t4.wav"}],
+    }
+
+    missing = client.post("/v1/reconcile", json=payload)
+    wrong = client.post(
+        "/v1/reconcile",
+        json=payload,
+        headers={"X-LastLine-Token": "wrong-token"},
+    )
+
+    assert missing.status_code == 401
+    assert wrong.status_code == 401
+    assert missing.json()["detail"] == "Invalid release-gate token"

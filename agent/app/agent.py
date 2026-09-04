@@ -12,7 +12,7 @@ from .models import CandidateBatch, ReconcileRequest, TraceStep, Usage
 from .prompts import SYSTEM_INSTRUCTION, build_request_prompt
 
 APP_NAME = "lastline_release_gate"
-MODEL = os.getenv("LASTLINE_GEMINI_MODEL", "gemini-2.5-flash")
+MODEL = os.getenv("LASTLINE_GEMINI_MODEL", "gemini-3.5-flash-lite")
 
 os.environ.setdefault("GOOGLE_GENAI_USE_VERTEXAI", "TRUE")
 

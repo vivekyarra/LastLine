@@ -32,9 +32,9 @@ Click **Approve WL-001 & release**. Pause on **SAFE TO RELEASE**, `5 / 5`, and t
 
 Show `docs/architecture.md` or a brief terminal/API shot.
 
-“The live path is FastAPI, Google ADK, and Gemini on Vertex AI. Gemini proposes structured evidence; Pydantic validates it; deterministic policy owns HOLD or CLEAR. Six web policy tests and twelve API tests prove the release invariant.”
+“The live path sends the synthetic WAV from the server to Gemini 3.5 Flash Lite and validates structured evidence before deterministic policy owns HOLD or CLEAR. Twelve web and live-boundary tests plus sixteen API tests prove the release invariant. The repository also preserves the Google ADK and Cloud Run agent path.”
 
-Click **Run live Vertex** only if the deployed call is green before recording. Never record a failing cloud call.
+Click **Run live Gemini** only after the deployed call is green. Never record a failing cloud call.
 
 ## 2:18–2:35 — Close
 

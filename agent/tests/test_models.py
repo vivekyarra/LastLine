@@ -40,3 +40,27 @@ def test_human_approval_requires_named_approver() -> None:
     data["recordings"][0]["human_approved"] = True
     with pytest.raises(ValidationError, match="approved_by"):
         ReconcileRequest.model_validate(data)
+
+
+def test_recording_notes_are_bounded() -> None:
+    data = payload()
+    data["recordings"][0]["notes"] = ["x" * 501]
+    with pytest.raises(ValidationError, match="500 characters"):
+        ReconcileRequest.model_validate(data)
+
+
+def test_combined_audio_payload_is_bounded() -> None:
+    data = payload()
+    eight_mib = base64.b64encode(b"x" * (8 * 1024 * 1024)).decode()
+    data["recordings"] = [
+        {"id": "T1", "filename": "t1.wav", "audio_base64": eight_mib, "mime_type": "audio/wav"},
+        {"id": "T2", "filename": "t2.wav", "audio_base64": eight_mib, "mime_type": "audio/wav"},
+        {
+            "id": "T3",
+            "filename": "t3.wav",
+            "audio_base64": base64.b64encode(b"x").decode(),
+            "mime_type": "audio/wav",
+        },
+    ]
+    with pytest.raises(ValidationError, match="combined audio payload"):
+        ReconcileRequest.model_validate(data)

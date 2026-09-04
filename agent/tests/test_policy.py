@@ -61,3 +61,25 @@ def test_empty_candidate_batch_holds_every_line() -> None:
     decision = evaluate_release(request(approved=True), CandidateBatch(candidates=[]).candidates)
     assert decision.status == "hold"
     assert decision.covered == 0
+
+
+def test_candidate_with_phantom_recording_id_does_not_clear() -> None:
+    """A candidate whose recording_id is not in request.recordings must not clear
+    the line even when every other quality gate passes.  This guards the safety
+    boundary that an actor-release decision is always grounded in recordings that
+    were actually submitted with the request."""
+    phantom = EvidenceCandidate.model_validate(
+        {
+            "line_id": "S12-L7",
+            "recording_id": "PHANTOM-999",   # not present in the request
+            "confidence": 0.99,
+            "completeness": "complete",
+            "transcript": "Because he followed you.",
+            "concerns": [],
+            "recommendation": "verified",
+            "reasoning": "Complete semantic match.",
+        }
+    )
+    decision = evaluate_release(request(approved=True), [phantom])
+    assert decision.status == "hold"
+    assert "S12-L7" in decision.unresolved_line_ids

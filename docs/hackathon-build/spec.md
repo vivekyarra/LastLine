@@ -140,7 +140,7 @@ Response:
 ```json
 {
   "run_id": "run_...",
-  "model": "gemini-2.5-flash",
+  "model": "gemini-3.5-flash-lite",
   "candidates": [{ "line_id": "S12-L7", "recording_id": "A007-T004", "confidence": 0.78, "completeness": "complete", "concerns": ["aircraft_noise"], "recommendation": "sound_check" }],
   "decision": { "status": "hold", "unresolved_line_ids": ["S12-L7"] },
   "trace": []
