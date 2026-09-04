@@ -6,6 +6,7 @@
 - The model cannot set the release verdict. Cloud failure, malformed output, partial dialogue, and missing human approval all fail closed.
 - The sample WAV is synthetic and contains no real performer or production data.
 - The web proxy has bounded timeouts plus limited retry/backoff for 429 and transient 5xx responses, and does not expose cloud credentials to the browser.
-- The public API requires a server-only `X-LastLine-Token`; the deployment script uses zero minimum and one maximum Cloud Run instance.
+- The deployed route keeps the Gemini key server-side, accepts only bounded JSON/audio payloads, validates every model-proposed ID against the submitted inventory, and fails closed on malformed output or cloud failure.
+- The optional Cloud Run service requires a server-only `X-LastLine-Token`; its guarded deployment script uses zero minimum and one maximum instance when billing is available.
 
 For a studio production deployment, add authenticated production membership, object storage with short-lived URLs instead of inline audio, provider-level rate limits, retention controls, audit export, and studio-specific data-processing terms. The public hackathon runtime is intentionally restricted to synthetic demonstration material.

@@ -23,7 +23,17 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { linesForApproval } from '@/lib/demo-data';
 import type { DemoStage } from '@/lib/domain';
+import type { LiveCandidate } from '@/lib/live-analysis';
 import { evaluateRelease } from '@/lib/release-policy';
+
+type LiveProof = {
+  run_id: string;
+  model: string;
+  runtime: string;
+  candidates: LiveCandidate[];
+  decision: { status: 'hold' | 'clear'; covered: number; total: number; unresolved_line_ids: string[] };
+  usage?: { input_tokens?: number | null; output_tokens?: number | null; total_tokens?: number | null };
+};
 
 const lines = [
   { id: 'S12-L3', text: 'I never said I trusted him.', status: 'verified' },
@@ -40,6 +50,7 @@ export default function Home() {
   const [selectedLineId, setSelectedLineId] = useState('S12-L7');
   const [liveStatus, setLiveStatus] = useState<'idle' | 'running' | 'success' | 'error'>('idle');
   const [liveDetail, setLiveDetail] = useState('Optional cloud proof');
+  const [liveProof, setLiveProof] = useState<LiveProof | null>(null);
   const releaseLines = useMemo(() => linesForApproval(stage === 'clear'), [stage]);
   const decision = useMemo(() => evaluateRelease(releaseLines), [releaseLines]);
   const selectedLine = releaseLines.find((line) => line.id === selectedLineId) ?? releaseLines[2];
@@ -58,7 +69,8 @@ export default function Home() {
 
   async function runLiveGemini() {
     setLiveStatus('running');
-    setLiveDetail('ADK is reconciling the synthetic WAV');
+    setLiveProof(null);
+    setLiveDetail('Gemini is reconciling the synthetic WAV');
     try {
       const audioResponse = await fetch('/demo-maya-wild-line.wav');
       if (!audioResponse.ok) throw new Error('Synthetic demo audio could not be loaded');
@@ -82,9 +94,10 @@ export default function Home() {
           }],
         }),
       });
-      const result = await response.json() as { detail?: string; run_id?: string; runtime?: string; candidates?: unknown[] };
+      const result = await response.json() as LiveProof & { detail?: string };
       if (!response.ok) throw new Error(result.detail ?? 'Live analysis failed');
       setLiveStatus('success');
+      setLiveProof(result);
       setLiveDetail(`${result.runtime ?? 'Gemini API'} · ${result.candidates?.length ?? 0} candidate · ${result.run_id ?? 'run complete'}`);
     } catch (error) {
       setLiveStatus('error');
@@ -249,6 +262,27 @@ export default function Home() {
 
             <div className="mt-3 flex items-center justify-between border border-border px-3 py-2.5 text-[11px] text-muted-foreground">
               <span className="flex items-center gap-2"><Sparkles className="size-3.5 text-signal" /> Seeded judge scenario</span><span className="font-mono">{isClear ? '20.0 s' : '1.4 s'}</span>
+            </div>
+
+            <div className={`mt-3 border p-3 ${liveStatus === 'success' ? 'border-signal/45 bg-signal/8' : liveStatus === 'error' ? 'border-hold/40 bg-hold/8' : 'border-border bg-muted/15'}`} aria-live="polite">
+              <div className="flex items-center justify-between gap-3">
+                <p className="eyebrow !text-signal">Live Gemini proof</p>
+                <span className="font-mono text-[10px] text-muted-foreground">{liveProof?.model ?? 'audio-backed'}</span>
+              </div>
+              {liveProof ? (
+                <div className="mt-2 space-y-2 text-[11px] leading-5">
+                  <p className="text-foreground">“{liveProof.candidates[0]?.transcript ?? 'No candidate transcript'}”</p>
+                  <div className="grid grid-cols-2 gap-2 border-t border-border/70 pt-2 text-muted-foreground">
+                    <span>Candidate <strong className="text-foreground">{liveProof.candidates[0]?.recording_id ?? 'none'}</strong></span>
+                    <span>Confidence <strong className="text-foreground">{liveProof.candidates[0] ? `${Math.round(liveProof.candidates[0].confidence * 100)}%` : '—'}</strong></span>
+                    <span>Policy <strong className="uppercase text-hold">{liveProof.decision.status}</strong></span>
+                    <span>Coverage <strong className="text-foreground">{liveProof.decision.covered}/{liveProof.decision.total}</strong></span>
+                  </div>
+                  <p className="font-mono text-[9px] text-muted-foreground">{liveProof.run_id} · {liveProof.usage?.total_tokens ?? '—'} tokens</p>
+                </div>
+              ) : (
+                <p className={`mt-2 text-[11px] leading-5 ${liveStatus === 'error' ? 'text-hold' : 'text-muted-foreground'}`}>{liveDetail}</p>
+              )}
             </div>
           </div>
         </aside>

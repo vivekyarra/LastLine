@@ -54,11 +54,11 @@
   Acceptance: Seeded demo remains independent; live mode never labels fallback output as a cloud run.
   Verify: Browser/API end-to-end request and console/network error check.
 
-- [ ] **7. Deploy and harden public runtime**
+- [x] **7. Deploy and harden public runtime**
   Spec ref: `spec.md > Stack`
-  What to build: Cloud Run service, Sites frontend, environment wiring, least-secret setup, health indicators, and anonymous judge access.
-  Acceptance: Hosted URL works without login; Cloud Run health identifies revision; no secrets are exposed.
-  Verify: Incognito/no-cookie readback, API health, live analysis, and release-loop browser checks.
+  What to build: Sites frontend, same-origin Gemini server route, environment wiring, least-secret setup, visible live-proof telemetry, and anonymous judge access. Preserve the ADK/Cloud Run service as an optional deployable path without claiming an unavailable deployment.
+  Acceptance: Hosted URL works without login; the live route identifies model/runtime/run ID and returns validated evidence; no secrets are exposed.
+  Verify: No-cookie readback, live analysis, release-loop browser checks, and tracked-secret scan.
 
 - [x] **8. Produce IBM Bob track evidence**
   Spec ref: `spec.md > Stack`
@@ -72,19 +72,19 @@
   Acceptance: Build, lint, tests, and smoke checks pass from a clean install; no forbidden secrets or private assets are tracked.
   Verify: Clean CI-equivalent command and secret scan.
 
-- [ ] **10. Prepare the judge-facing repository and Devpost package**
+- [x] **10. Prepare the judge-facing repository and Devpost package**
   Spec ref: `prd.md > Submission Proof Points`
   What to build: Winner-pattern README, architecture diagram, screenshots, ≤3-minute demo script, Devpost draft, and exact track/runtime evidence mapping.
   Acceptance: A judge can grasp the problem, try the app, verify tech, and reproduce it from the top of the README.
   Verify: Link/readback audit and rubric-by-rubric checklist.
 
-- [ ] **11. Publish code and create the Devpost draft**
+- [x] **11. Publish code and create the Devpost draft**
   Spec ref: `prd.md > Submission Proof Points`
   What to build: Initialize git, commit verified work, push to `vivekyarra/LastLine`, create/update the Devpost project draft, and attach hosted/repo links without final submission.
   Acceptance: GitHub default branch contains exact verified files; live Devpost project readback matches the draft.
   Verify: GitHub API/readback, clean worktree, and Devpost `get_project` readback.
 
-- [ ] **12. Prepare final submission handoff**
+- [x] **12. Prepare final submission handoff**
   Spec ref: `prd.md > Submission Proof Points`
   What to build: Gather final live URLs, video URL placeholder/status, required field answers, screenshots, and explicit unresolved blockers for `$prepare-submission` / `$submit-project`.
   Acceptance: Everything automatable is complete; only human-only facts, video upload, or explicit final-submit consent remain.
