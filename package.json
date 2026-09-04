@@ -12,10 +12,12 @@
     "lint": "oxlint app lib tests",
     "format": "oxfmt",
     "test": "vitest run",
+    "verify:gemini": "node --env-file=.env.local scripts/verify-gemini-sdk.mjs",
     "verify": "npm run lint && npm run test && npm run build"
   },
   "dependencies": {
     "@base-ui/react": "1.7.0",
+    "@google/genai": "^2.21.0",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "lucide-react": "1.31.0",

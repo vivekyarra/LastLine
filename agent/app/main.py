@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import os
 import logging
+import secrets
 from datetime import UTC, datetime
 from importlib.metadata import version
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from .agent import MODEL, run_reconciler, vertex_configured
@@ -45,8 +46,21 @@ async def healthz() -> dict[str, object]:
     }
 
 
+def require_gate_token(provided_token: str | None) -> None:
+    """Keep the public Cloud Run URL from becoming an open Gemini relay."""
+    configured_token = os.getenv("LASTLINE_GATE_TOKEN")
+    if configured_token and (
+        provided_token is None or not secrets.compare_digest(provided_token, configured_token)
+    ):
+        raise HTTPException(status_code=401, detail="Invalid release-gate token")
+
+
 @app.post("/v1/reconcile", response_model=ReconcileResponse)
-async def reconcile(request: ReconcileRequest) -> ReconcileResponse:
+async def reconcile(
+    request: ReconcileRequest,
+    x_lastline_token: str | None = Header(default=None),
+) -> ReconcileResponse:
+    require_gate_token(x_lastline_token)
     try:
         run_id, batch, usage, trace = await run_reconciler(request)
     except RuntimeError as exc:

@@ -56,7 +56,7 @@ export default function Home() {
     setStage((current) => current === 'hold' ? 'recording' : current === 'recording' ? 'review' : current === 'review' ? 'clear' : 'hold');
   }
 
-  async function runLiveVertex() {
+  async function runLiveGemini() {
     setLiveStatus('running');
     setLiveDetail('ADK is reconciling the synthetic WAV');
     try {
@@ -85,7 +85,7 @@ export default function Home() {
       const result = await response.json() as { detail?: string; run_id?: string; runtime?: string; candidates?: unknown[] };
       if (!response.ok) throw new Error(result.detail ?? 'Live analysis failed');
       setLiveStatus('success');
-      setLiveDetail(`${result.runtime ?? 'Vertex AI'} · ${result.candidates?.length ?? 0} candidate · ${result.run_id ?? 'run complete'}`);
+      setLiveDetail(`${result.runtime ?? 'Gemini API'} · ${result.candidates?.length ?? 0} candidate · ${result.run_id ?? 'run complete'}`);
     } catch (error) {
       setLiveStatus('error');
       setLiveDetail(error instanceof Error ? error.message : 'Live analysis failed safely');
@@ -116,8 +116,8 @@ export default function Home() {
           </div>
 
           <div className="flex items-center gap-1">
-            <Button variant="outline" size="sm" className="hidden rounded-none border-signal/30 text-signal sm:inline-flex" onClick={runLiveVertex} disabled={liveStatus === 'running'}>
-              {liveStatus === 'running' ? <LoaderCircle className="animate-spin" /> : <CloudCog />} Run live Vertex
+            <Button variant="outline" size="sm" className="hidden rounded-none border-signal/30 text-signal sm:inline-flex" onClick={runLiveGemini} disabled={liveStatus === 'running'}>
+              {liveStatus === 'running' ? <LoaderCircle className="animate-spin" /> : <CloudCog />} Run live Gemini
             </Button>
             <Button variant="ghost" size="sm" className="text-muted-foreground" onClick={resetDemo}><RotateCcw /> Reset</Button>
           </div>

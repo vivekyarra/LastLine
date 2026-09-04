@@ -38,6 +38,13 @@ class RecordingInput(BaseModel):
     human_approved: bool = False
     approved_by: str | None = Field(default=None, max_length=160)
 
+    @field_validator("notes")
+    @classmethod
+    def bounded_notes(cls, notes: list[str]) -> list[str]:
+        if any(len(note) > 500 for note in notes):
+            raise ValueError("recording notes must be 500 characters or fewer")
+        return notes
+
     @model_validator(mode="after")
     def validate_audio_pair(self) -> "RecordingInput":
         if bool(self.audio_base64) != bool(self.mime_type):
@@ -63,6 +70,13 @@ class ReconcileRequest(BaseModel):
     actor: Actor
     required_lines: list[RequiredLineInput] = Field(min_length=1, max_length=100)
     recordings: list[RecordingInput] = Field(min_length=1, max_length=100)
+
+    @model_validator(mode="after")
+    def bounded_audio_batch(self) -> "ReconcileRequest":
+        total_audio_bytes = sum(len(audio) for item in self.recordings if (audio := item.audio_bytes()))
+        if total_audio_bytes > 16 * 1024 * 1024:
+            raise ValueError("combined audio payload exceeds 16 MiB")
+        return self
 
     @field_validator("required_lines")
     @classmethod
