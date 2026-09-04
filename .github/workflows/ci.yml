@@ -18,7 +18,13 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run verify
-      - run: npm audit --audit-level=high
+      - name: Audit dependencies with registry retry
+        run: |
+          for attempt in 1 2 3; do
+            npm audit --audit-level=high && exit 0
+            if [ "$attempt" -eq 3 ]; then exit 1; fi
+            sleep $((attempt * 10))
+          done
 
   agent:
     runs-on: ubuntu-latest
