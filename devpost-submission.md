@@ -123,7 +123,7 @@ Status: repository is public with an OSI-approved MIT license; the final verifie
 
 ## Demo Video
 
-Public YouTube/Vimeo URL: **TODO after recording the verified public Gemini path.**
+Public YouTube URL: https://youtu.be/TkmqTKCA3CQ
 
 Planned runtime: 2:35, safely below the three-minute limit.
 
@@ -151,8 +151,8 @@ Planned runtime: 2:35, safely below the three-minute limit.
 - IBM Bob material development contribution: complete — Bob added and verified the phantom-recording fail-closed regression test; see `docs/ibm-bob/usage-2026-09-03.md`.
 - Public GitHub source and Devpost draft readback: complete.
 - Devpost project: https://devpost.com/software/lastline-hold-for-sound
-- Public demo video and URL: intentionally left for the submitter to record and upload.
-- The project remains a draft; it has not been finally submitted to the hackathon.
+- Public demo video and URL: complete — https://youtu.be/TkmqTKCA3CQ
+- Submitted to Agentic Cinema as submission `1170562` on 2026-09-04; live readback is required before treating this status as final.
 
 ## Known Limitations
 
