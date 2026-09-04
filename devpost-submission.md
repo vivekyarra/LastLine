@@ -56,7 +56,7 @@ The most valuable iteration was not code generation: a policy test exposed that 
 - Three-state close-the-loop flow: recording, sound review, and authorized release.
 - Network-independent seeded judge scenario, clearly labeled and kept separate from live cloud proof.
 - Fail-closed live route with no fake fallback results.
-- Server-only Cloud Run gate token, bounded request schemas, scale-to-zero, and one-instance cap.
+- Server-only credentials, bounded request schemas, strict inventory validation, and fail-closed cloud errors.
 - Synthetic demonstration audio; no real performer voice or production material.
 
 ## Architecture
@@ -104,7 +104,7 @@ cd agent
 python -m venv .venv
 # activate the environment, then:
 pip install -r requirements.txt
-pytest -q
+python -m pytest -q
 ```
 
 Verified locally: 12 TypeScript policy/live-boundary tests, 16 Python API/schema/policy tests, a clean production build, an exact audio-backed production-route request, an independent official-SDK request, a fresh browser replay at desktop and mobile widths, and a clean high-severity npm audit.
@@ -113,13 +113,13 @@ Verified locally: 12 TypeScript policy/live-boundary tests, 16 Python API/schema
 
 https://lastline-release-gate.cinevault7.chatgpt.site
 
-Status: public anonymous HTTP 200 verified. The final Gemini-enabled version is being published from the verified release commit.
+Status: public anonymous HTTP 200 verified, including the complete release workflow and a successful audio-backed live Gemini request.
 
 ## Public Repository Link
 
 https://github.com/vivekyarra/LastLine
 
-Status: repository exists and is public; the final verified source push is pending.
+Status: repository is public with an OSI-approved MIT license; the final verified release commit is being published in this pass.
 
 ## Demo Video
 
@@ -149,9 +149,10 @@ Planned runtime: 2:35, safely below the three-minute limit.
 - Core product, tests, architecture, security notes, screenshots, and demo script: complete.
 - Successful live Gemini production-route and official-SDK proof: complete and sanitized in `docs/verification/live-gemini-2026-09-04.md`.
 - IBM Bob material development contribution: complete — Bob added and verified the phantom-recording fail-closed regression test; see `docs/ibm-bob/usage-2026-09-03.md`.
-- Final GitHub source push and live readback: pending this release pass.
-- Public demo video and URL: pending cloud proof.
-- Nothing has been sent to Devpost from this draft.
+- Public GitHub source and Devpost draft readback: complete.
+- Devpost project: https://devpost.com/software/lastline-hold-for-sound
+- Public demo video and URL: intentionally left for the submitter to record and upload.
+- The project remains a draft; it has not been finally submitted to the hackathon.
 
 ## Known Limitations
 
@@ -163,18 +164,18 @@ Planned runtime: 2:35, safely below the three-minute limit.
 
 ## TODO Official Form Fields
 
-- Submitter Type: **TODO confirm Individual / Team / Organization**
-- Organization name: **TODO; use `N/A` if Individual**
-- Government employee: **TODO confirm Yes / No**
+- Submitter Type: Individual
+- Organization name: N/A
+- Government employee: No
 - Country of Residence: India
 - Canadian province: N/A
 - Project status before July 27, 2026: New
 - Partner track: IBM
-- Team size: **TODO confirm**
+- Team size: 1
 - Repository URL: https://github.com/vivekyarra/LastLine
 - Hosted project URL: https://lastline-release-gate.cinevault7.chatgpt.site
 - Google Cloud products: Gemini Developer API on project `lastline-agentic-cinema`, Google Gen AI SDK, Google Agent Development Kit, and a Vertex AI/Cloud Run-compatible agent path. Cloud Run is not claimed as deployed.
 - Other tools: IBM Bob, FastAPI, Pydantic, React, TypeScript, Vinext, Tailwind CSS, Vitest, pytest, GitHub Actions, Sites.
-- First time using IBM tools: **TODO confirm**
+- First time using IBM tools: Yes
 - Non-selected track questions: N/A options.
 - Optional IBM marketing consent: leave unchecked unless explicitly requested.

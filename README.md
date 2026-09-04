@@ -6,7 +6,7 @@
 
 **HOLD FOR SOUND → capture the missing line → human approval → SAFE TO RELEASE**
 
-[Try the live demo](https://lastline-release-gate.cinevault7.chatgpt.site) · [Follow the 2:35 demo](docs/demo-script.md) · [Inspect the architecture](docs/architecture.md)
+[Try the live demo](https://lastline-release-gate.cinevault7.chatgpt.site) · [View the Devpost project](https://devpost.com/software/lastline-hold-for-sound) · [Follow the 2:35 demo](docs/demo-script.md) · [Inspect the architecture](docs/architecture.md)
 
 </div>
 
@@ -67,6 +67,7 @@ human sound approval ─────────────────→ dete
 - **Agent API:** Python 3.12, FastAPI, Pydantic.
 - **AI runtime:** Gemini 3.5 Flash Lite through the Gemini Developer API; Google ADK + Vertex AI remains available through the containerized agent service.
 - **Cloud:** restricted Google API key on project `lastline-agentic-cinema`; Sites/Cloudflare-compatible web runtime; optional Cloud Run API container.
+- **Rules evidence:** [`docs/hackathon-compliance.md`](docs/hackathon-compliance.md) maps every Agentic Cinema runtime and IBM-track requirement to executable code or public proof.
 - **Partner track:** IBM. Bob audited the release boundary and added a regression test proving phantom recording IDs cannot clear owed dialogue. The dated prompt, change, and verification are preserved in [`docs/ibm-bob/usage-2026-09-03.md`](docs/ibm-bob/usage-2026-09-03.md).
 
 See the full [architecture and trust boundary](docs/architecture.md).
@@ -109,7 +110,7 @@ The deployment script fails closed when billing is unavailable, scales the servi
 ```bash
 npm run verify
 npm run verify:gemini
-cd agent && pytest -q
+cd agent && python -m pytest -q
 ```
 
 Current result: **12 web/live-boundary tests + 16 API/schema/policy tests pass**, the production web build succeeds, and the high-severity dependency audit is clean. A fresh production-route call and a separate official `@google/genai` SDK call both transcribed the synthetic WAV exactly; the sanitized proof is in [`docs/verification/live-gemini-2026-09-04.md`](docs/verification/live-gemini-2026-09-04.md). CI repeats build, lint, tests, and the high-severity dependency audit on every push and pull request.
