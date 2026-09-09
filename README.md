@@ -6,7 +6,7 @@
 
 **HOLD FOR SOUND → capture the missing line → human approval → SAFE TO RELEASE**
 
-[Try the live demo](https://lastline-release-gate.web.app) · [View the Devpost project](https://devpost.com/software/lastline-hold-for-sound) · [Follow the 2:35 demo](docs/demo-script.md) · [Inspect the architecture](docs/architecture.md)
+[Try the live demo](https://lastline-pearl.vercel.app) · [Watch the 2:35 demo video](https://youtu.be/NwHcqW0dwMs?si=OcM8-1cw7BW9dMmT) · [View the Devpost project](https://devpost.com/software/lastline-hold-for-sound) · [Inspect the architecture](docs/architecture.md)
 
 </div>
 
@@ -66,7 +66,7 @@ human sound approval ─────────────────→ dete
 - **Release console:** React 19, TypeScript, Vinext, Tailwind, shadcn/Base UI.
 - **Agent API:** Python 3.12, FastAPI, Pydantic.
 - **AI runtime:** Gemini 3.5 Flash Lite through the Gemini Developer API; Google ADK + Vertex AI remains available through the containerized agent service.
-- **Cloud:** restricted Google API key on project `lastline-agentic-cinema`; Sites/Cloudflare-compatible web runtime; optional Cloud Run API container.
+- **Cloud:** restricted Google API key on project `lastline-agentic-cinema`; Vercel production deployment; optional Cloud Run API container.
 - **Rules evidence:** [`docs/hackathon-compliance.md`](docs/hackathon-compliance.md) maps every Agentic Cinema runtime and IBM-track requirement to executable code or public proof.
 - **Partner track:** IBM. Bob audited the release boundary and added a regression test proving phantom recording IDs cannot clear owed dialogue. The dated prompt, change, and verification are preserved in [`docs/ibm-bob/usage-2026-09-03.md`](docs/ibm-bob/usage-2026-09-03.md).
 

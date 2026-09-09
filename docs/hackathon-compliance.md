@@ -5,7 +5,7 @@ Verified against the live Agentic Cinema submission requirements and official ru
 | Requirement | LastLine evidence |
 | --- | --- |
 | Functional production-ready AI agent for a media workflow | The public actor-release gate performs a complete HOLD → pickup → review → human authorization → CLEAR workflow. |
-| Hosted project URL | `https://lastline-release-gate.web.app` is anonymously accessible and the same-origin live route performs a real audio-backed Gemini request. The rules require a hosted web project; they do not require Cloud Run hosting. |
+| Hosted project URL | `https://lastline-pearl.vercel.app` is anonymously accessible and the same-origin live route performs a real audio-backed Gemini request. The rules require a hosted web project; they do not require Cloud Run hosting. |
 | Gemini and Google Cloud runtime use | `app/api/live-analysis/route.ts` calls Gemini's `generateContent` API with audio and a strict response schema. `scripts/verify-gemini-sdk.mjs` imports `@google/genai` and calls `ai.models.generateContent`. `agent/app/agent.py` imports `google-adk` and `google-genai`, constructs an `LlmAgent` and `Runner`, and calls `runner.run_async`. Both accepted Python packages are pinned in `agent/requirements.txt`. |
 | Google Cloud Agent Builder / agent framework | The Cloud Run-compatible FastAPI service is built around Google ADK's `LlmAgent`, session service, and `Runner`. Its API and policy are covered by the 16-test Python suite. The public web slice uses the Gemini API directly because Cloud Run billing is unavailable; no undeployed runtime is claimed. |
 | IBM partner-track requirement | IBM Bob Shell 2.0.2 was used during development to audit the release boundary and author the phantom-recording regression test. The exact dated task, contribution, and focused 6/6 verification are in `docs/ibm-bob/usage-2026-09-03.md`. The IBM rule requires Bob development usage; Confluent is optional. |
@@ -13,7 +13,7 @@ Verified against the live Agentic Cinema submission requirements and official ru
 | Only permitted AI tooling | Runtime inference uses Google Gemini only. Development assistance was provided by Google Antigravity and IBM Bob. Build and hosting pipelines use standard web tooling with zero third-party model APIs or dependencies. |
 | Public source and OSI license | `https://github.com/vivekyarra/LastLine` is public and GitHub detects the repository's MIT license. |
 | Reproducible and consistent | `npm ci`, lint, 12 TypeScript tests, production build, 16 Python tests, and a high-severity dependency audit are release gates. CI runs the same commands on GitHub Actions. |
-| Demonstration video | Required public YouTube/Vimeo video is intentionally left for the submitter to record. This is the only incomplete mandatory deliverable. |
+| Demonstration video | Public demonstration video: https://youtu.be/NwHcqW0dwMs?si=OcM8-1cw7BW9dMmT |
 
 ## Hosting decision
 

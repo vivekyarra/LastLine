@@ -45,3 +45,4 @@ next-env.d.ts
 
 # local operating-system and tool state
 .devpost-hackathon-state.json
+artifacts/

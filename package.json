@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "vinext dev",
-    "build": "vinext build",
+    "build": "vinext build && node scripts/generate-index-html.mjs",
     "start": "wrangler dev --config dist/server/wrangler.json",
     "lint": "oxlint app lib tests",
     "format": "oxfmt",
@@ -44,6 +44,9 @@
     "vite": "8.2.2",
     "vitest": "^4.1.11",
     "wrangler": "4.128.0"
+  },
+  "overrides": {
+    "sharp": "^0.35.4"
   },
   "type": "module"
 }

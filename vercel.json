@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "outputDirectory": "dist/client",
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/api/live-analysis", "destination": "/api/live-analysis" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
